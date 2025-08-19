@@ -5,10 +5,10 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
-public class GenreateAst{
+public class GenerateAst{
     public static void main(String[] args) throws IOException{
         if (args.length != 1){
-            System.err.prinln("Usage: genreate_ast <output directory>");
+            System.err.println("Usage: genreate_ast <output directory>");
             System.exit(64);
         }
         String outputDir = args[0];
@@ -24,7 +24,7 @@ public class GenreateAst{
     private static void defineAst(
         String outputDir, String baseName, List<String> types) throws IOException {
             String path = outputDir + "/" + baseName + ".java";
-            PrintWriter writer = new PrintWriter(path," UTF-8");
+            PrintWriter writer = new PrintWriter(path,"UTF-8");
 
             writer.println("package com.craftinginterpreters.lox;");
             writer.println();
@@ -43,7 +43,7 @@ public class GenreateAst{
 
         }
         private static void defineType(PrintWriter writer, String baseName, String className, String fieldList ){
-            writer.println(" static class " + className + "extends " + baseName + " {");
+            writer.println(" static class " + className + " extends " + baseName + " {");
             //Constructor
             writer.println("    " + className + "(" + fieldList + ") {");
             //storing parameters in fields
@@ -51,7 +51,7 @@ public class GenreateAst{
             String [] fields = fieldList.split(", ");
             for (String field : fields){
                 String name = field.split(" ")[1];
-                writer.println("    this." + name + " = " + ";");
+                writer.println("    this." + name + " = " +name + ";");
             }
             writer.println("    }");
 
@@ -61,7 +61,7 @@ public class GenreateAst{
                 writer.println("    final " + field + ";");
             }
             writer.println("  }");
-            
+
         }
 
 }
