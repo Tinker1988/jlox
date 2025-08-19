@@ -31,9 +31,37 @@ public class GenreateAst{
             writer.println("import java.util.List;");
             writer.println();
             writer.println("abstract class " + baseName + " {");
+            for (String type : types){
+                String className = type.split(":")[0].trim();
+                String fields = type.split(":")[1].trim();
+                defineType(writer, baseName, className, fields);
+
+}
             writer.println("}");
             writer.close();
 
+
+        }
+        private static void defineType(PrintWriter writer, String baseName, String className, String fieldList ){
+            writer.println(" static class " + className + "extends " + baseName + " {");
+            //Constructor
+            writer.println("    " + className + "(" + fieldList + ") {");
+            //storing parameters in fields
+
+            String [] fields = fieldList.split(", ");
+            for (String field : fields){
+                String name = field.split(" ")[1];
+                writer.println("    this." + name + " = " + ";");
+            }
+            writer.println("    }");
+
+            //fields
+            writer.println();
+            for(String field : fields){
+                writer.println("    final " + field + ";");
+            }
+            writer.println("  }");
+            
         }
 
 }
