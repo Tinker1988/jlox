@@ -1,7 +1,5 @@
 package com.craftinginterpreters.lox;
 
-import java.util.List;
-
 abstract class Expr {
  static class Binary extends Expr {
     Binary(Expr left, Token operator, Expr right) {
