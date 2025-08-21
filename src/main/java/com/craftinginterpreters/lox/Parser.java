@@ -5,7 +5,25 @@ import java.util.List;
 import com.craftinginterpreters.lox.TokenType.*;
 
 class Parser{
+
+    Expr parse(){
+        try {
+            return expression();
+        } catch (ParseError e) {
+            return null;
+        }
+    }
+
+    private static class ParseError extends RuntimeException{}
+
     private final List<Token> tokens;
+    Parser parser = new Parser(tokens);
+    Expr expression = parser.parse();
+
+    if (hadError) return;
+    
+    System.out.println(new AstPrinter().print(expression));
+
 
     private int current = 0;
 
@@ -86,6 +104,8 @@ class Parser{
             consume(RIGHT_PAREN, "Expect ')' after expression. ");
             return new Expr.Grouping(expr);
         }
+        throw error(peek(), "Expecting expression.");
+
     }
     private boolean match(TokenType...types){
         for(TokenType type : types){
@@ -95,6 +115,12 @@ class Parser{
             }
         }
         return false;
+    }
+
+    private Token consume(TokenType type, String message){
+        if (check(type)) return advance();
+
+        throw error(peek(), message);
     }
 
     private boolean check(TokenType type){
@@ -118,6 +144,43 @@ class Parser{
 
     private Token previous(){
         return tokens.get(current - 1);
+    }
+
+    private ParseError error(TokenType token, String message){
+        Lox.error(token, message);
+        return new ParseError();
+
+    }
+
+    static void error(Token token, String message){
+        if(token.type == TokenType.EOF){
+            report(token.line, " at end", message);
+        } else {
+            report( token.line, " at '" + token.lexeme + "'", message);
+
+        }
+    }
+
+    private void synchronize(){
+        advance();
+
+        while(!isAtEnd()){
+            if (previous().type == TokenType.SEMICOLON) return;
+
+            switch (peek().type){
+                case CLASS:
+                case FUN:
+                case VAR:
+                case FOR:
+                case IF:
+                case WHILE:
+                case PRINT:
+                case RETURN:
+                    return;
+                
+            }
+            advance();
+        }
     }
 
 
