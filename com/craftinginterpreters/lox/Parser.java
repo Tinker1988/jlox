@@ -17,14 +17,7 @@ class Parser{
     private static class ParseError extends RuntimeException{}
 
     private final List<Token> tokens;
-    Parser parser = new Parser(tokens);
-    Expr expression = parser.parse();
-
-    if (hadError) return;
     
-    System.out.println(new AstPrinter().print(expression));
-
-
     private int current = 0;
 
     public Parser(List<Token> tokens) {
@@ -94,12 +87,12 @@ class Parser{
         if (match(TRUE)) return new Expr.Literal(true);
         if (match(NIL)) return new Expr.Literal(null);
 
-        if (match(NUMBER, STRING)){
+        if (match(TokenType.NUMBER, TokenType.STRING)){
             return new Expr.Literal(previous().literal);
 
         }
 
-        if (match(TokenType.LEFT_PAREN)) {
+        if (match(LEFT_PAREN)) {
             Expr expr = expression();
             consume(RIGHT_PAREN, "Expect ')' after expression. ");
             return new Expr.Grouping(expr);
@@ -152,14 +145,6 @@ class Parser{
 
     }
 
-    static void error(Token token, String message){
-        if(token.type == TokenType.EOF){
-            report(token.line, " at end", message);
-        } else {
-            report( token.line, " at '" + token.lexeme + "'", message);
-
-        }
-    }
 
     private void synchronize(){
         advance();
