@@ -1,8 +1,6 @@
-package com.craftinginterpreter.lox;
+package com.craftinginterpreters.lox;
 
 
-
-import com.craftinginterpreters.lox.Expr;
 
 
 class AstPrinter implements Expr.Visitor<String> {
@@ -16,7 +14,7 @@ class AstPrinter implements Expr.Visitor<String> {
     }
     @Override
     public String visitGroupingExpr(Expr.Grouping expr){
-        return parenthezise("group", expr.expression);
+        return parenthesize("group", expr.expression);
 
     }
     @Override
@@ -29,7 +27,7 @@ class AstPrinter implements Expr.Visitor<String> {
   public String visitUnaryExpr(Expr.Unary expr) {
     return parenthesize(expr.operator.lexeme, expr.right);
   }
-  private String parenthesize(String name, Expression...exprs){
+  private String parenthesize(String name, Expr...exprs){
     StringBuilder builder = new StringBuilder();
 
     builder.append("(").append(name);
@@ -44,12 +42,12 @@ class AstPrinter implements Expr.Visitor<String> {
   }
   public static void main(String[] args){
     Expr expression = new Expr.Binary(
-        new Expression.Unary(
+        new Expr.Unary(
             new Token(TokenType.MINUS, "-", null, 1),
             new Expr.Literal(123)),
-            new Token(tokenType.STAR, "*", null, 1),
-            new Expression.Grouping(
-                new Expression.Literal(45.67)));
+            new Token(TokenType.STAR, "*", null, 1),
+            new Expr.Grouping(
+                new Expr.Literal(45.67)));
     System.out.println(new AstPrinter().print(expression));
   }
 }
