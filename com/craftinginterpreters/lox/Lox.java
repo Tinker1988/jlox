@@ -41,12 +41,7 @@ public class Lox {
 
         System.out.println(new AstPrinter().print(expression));
 
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
-        if (hadError) {
-            System.exit(65);
-        }
+       
     }
 
     private static void runPrompt() throws IOException {
