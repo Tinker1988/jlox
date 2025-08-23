@@ -2,7 +2,8 @@ package com.craftinginterpreters.lox;
 
 import java.util.List;
 
-import com.craftinginterpreters.lox.TokenType.*;
+
+import static com.craftinginterpreters.lox.TokenType.*;
 
 class Parser{
 
@@ -21,7 +22,7 @@ class Parser{
     private int current = 0;
 
     public Parser(List<Token> tokens) {
-        this.tokens = null;
+        this.tokens = tokens;
     }
 
     private Expr expression(){
@@ -139,7 +140,7 @@ class Parser{
         return tokens.get(current - 1);
     }
 
-    private ParseError error(TokenType token, String message){
+    private ParseError error(Token token, String message){
         Lox.error(token, message);
         return new ParseError();
 
