@@ -18,4 +18,4 @@ run: all
 
 # Remove all compiled .class files
 clean:
-	del /s /q $(SRC_DIRS)\*.class
+	@powershell -Command "Get-ChildItem -Recurse -Filter *.class | Remove-Item -Force"
