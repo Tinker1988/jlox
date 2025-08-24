@@ -7,7 +7,7 @@ class Interpreter implements Expr.Visitor<Object>{
         try {
             Object value = evaluate(expression);
             System.out.println(stringify(value));
-        } catch (RuntimeError e) {
+        } catch (RuntimeError error) {
             Lox.RuntimeError(error);
         }
     }
@@ -59,7 +59,7 @@ class Interpreter implements Expr.Visitor<Object>{
         return a.equals(b);
     }
 
-    private String stringyfy(Object object){
+    private String stringify(Object object){
         if (object == null) return "nil";
         if (object instanceof Double) {
             String text = object.toString();
