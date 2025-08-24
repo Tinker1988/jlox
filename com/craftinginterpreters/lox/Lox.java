@@ -48,7 +48,7 @@ public class Lox {
 
         interpreter.interpret(expression);
 
-        System.out.println(new AstPrinter().print(expression));
+       // System.out.println(new AstPrinter().print(expression));
 
        
     }
