@@ -15,7 +15,7 @@ class Environment {
     }
 
     void assign(Token name, Object value) {
-        if(values.containsKeys(name.lexeme)) {
+        if(values.containsKey(name.lexeme)) {
             values.put(name.lexeme, value);
             return;
         }
