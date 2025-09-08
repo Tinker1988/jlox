@@ -1,7 +1,7 @@
 package com.craftinginterpreters.lox;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
 
@@ -227,7 +227,7 @@ public Object visitLogicalExpr(Expr.Logical expr) {
 
     @Override
 public Object visitCallExpr(Expr.Call expr) {
-    Object calle = evaluate(expr.callee);
+    Object callee = evaluate(expr.callee);
 
     List<Object> arguments = new ArrayList<>();
     for(Expr argument : expr.arguments) {
